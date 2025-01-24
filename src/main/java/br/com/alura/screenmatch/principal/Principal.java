@@ -39,7 +39,8 @@ public class Principal {
                     2 - Buscar episódios
                     3 - Listar séries buscadas
                     4 - Buscar série por título
-                    5 - Buscar serie por ator
+                    5 - Buscar série por ator
+                    6 - Buscar as top 5 séries
                     
                     0 - Sair                                 
                     """;
@@ -63,6 +64,9 @@ public class Principal {
                     break;
                 case 5:
                     buscarSeriePorAtor();
+                    break;
+                case 6:
+                    buscarTop5Series();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -147,6 +151,13 @@ public class Principal {
         List<Serie> seriesEncontradas = repositorio.findByAtoresContainingIgnoreCaseAndAvaliacaoGreaterThanEqual(nomeAtor, avaliacao);
         System.out.println("Séries em que " + nomeAtor + " atuou: ");
         seriesEncontradas.forEach(s ->
+                System.out.println(s.getTitulo() + ", avaliação: " + s.getAvaliacao()));
+    }
+
+    private void buscarTop5Series(){
+        List<Serie> top5Series = repositorio.findTop5ByOrderByAvaliacaoDesc();
+        System.out.println("Top 5 séries: ");
+        top5Series.forEach(s ->
                 System.out.println(s.getTitulo() + ", avaliação: " + s.getAvaliacao()));
     }
 }
